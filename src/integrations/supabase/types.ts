@@ -97,33 +97,60 @@ export type Database = {
       }
       event_rounds: {
         Row: {
+          allow_answer_change: boolean
+          allow_backward_navigation: boolean
           created_at: string
+          created_by: string | null
+          duration_minutes: number
           event_id: string
           id: string
+          instructions: string | null
           name: string
+          negative_marking: number
           question_count: number
+          result_visibility: Database["public"]["Enums"]["result_visibility"]
           round_order: number
           round_type: string | null
+          status: Database["public"]["Enums"]["round_status"]
+          total_marks: number
           updated_at: string
         }
         Insert: {
+          allow_answer_change?: boolean
+          allow_backward_navigation?: boolean
           created_at?: string
+          created_by?: string | null
+          duration_minutes?: number
           event_id: string
           id?: string
+          instructions?: string | null
           name: string
+          negative_marking?: number
           question_count?: number
+          result_visibility?: Database["public"]["Enums"]["result_visibility"]
           round_order?: number
           round_type?: string | null
+          status?: Database["public"]["Enums"]["round_status"]
+          total_marks?: number
           updated_at?: string
         }
         Update: {
+          allow_answer_change?: boolean
+          allow_backward_navigation?: boolean
           created_at?: string
+          created_by?: string | null
+          duration_minutes?: number
           event_id?: string
           id?: string
+          instructions?: string | null
           name?: string
+          negative_marking?: number
           question_count?: number
+          result_visibility?: Database["public"]["Enums"]["result_visibility"]
           round_order?: number
           round_type?: string | null
+          status?: Database["public"]["Enums"]["round_status"]
+          total_marks?: number
           updated_at?: string
         }
         Relationships: [
@@ -143,8 +170,12 @@ export type Database = {
           description: string | null
           end_time: string | null
           event_date: string
+          event_mode: Database["public"]["Enums"]["event_mode"]
           id: string
           name: string
+          online_platform: string | null
+          registration_closes_at: string | null
+          registration_opens_at: string | null
           start_time: string | null
           status: Database["public"]["Enums"]["event_status"]
           updated_at: string
@@ -156,8 +187,12 @@ export type Database = {
           description?: string | null
           end_time?: string | null
           event_date: string
+          event_mode?: Database["public"]["Enums"]["event_mode"]
           id?: string
           name: string
+          online_platform?: string | null
+          registration_closes_at?: string | null
+          registration_opens_at?: string | null
           start_time?: string | null
           status?: Database["public"]["Enums"]["event_status"]
           updated_at?: string
@@ -169,8 +204,12 @@ export type Database = {
           description?: string | null
           end_time?: string | null
           event_date?: string
+          event_mode?: Database["public"]["Enums"]["event_mode"]
           id?: string
           name?: string
+          online_platform?: string | null
+          registration_closes_at?: string | null
+          registration_opens_at?: string | null
           start_time?: string | null
           status?: Database["public"]["Enums"]["event_status"]
           updated_at?: string
@@ -636,6 +675,7 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      is_organiser: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
       app_role:
@@ -655,6 +695,7 @@ export type Database = {
         | "PARA_CLINICAL_HEAD"
         | "CLINICAL_HEAD"
       difficulty_level: "EASY" | "MEDIUM" | "HARD"
+      event_mode: "ONLINE" | "OFFLINE"
       event_status:
         | "DRAFT"
         | "REGISTRATION_OPEN"
@@ -675,7 +716,9 @@ export type Database = {
         | "IMAGE_BASED"
         | "BUZZER"
       registration_status: "PENDING" | "CONFIRMED" | "WAITLISTED" | "CANCELLED"
+      result_visibility: "IMMEDIATE" | "AFTER_EVENT"
       review_verdict: "APPROVED" | "REJECTED" | "NEEDS_REVISION"
+      round_status: "DRAFT" | "PUBLISHED" | "ARCHIVED"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -821,6 +864,7 @@ export const Constants = {
         "CLINICAL_HEAD",
       ],
       difficulty_level: ["EASY", "MEDIUM", "HARD"],
+      event_mode: ["ONLINE", "OFFLINE"],
       event_status: [
         "DRAFT",
         "REGISTRATION_OPEN",
@@ -844,7 +888,9 @@ export const Constants = {
         "BUZZER",
       ],
       registration_status: ["PENDING", "CONFIRMED", "WAITLISTED", "CANCELLED"],
+      result_visibility: ["IMMEDIATE", "AFTER_EVENT"],
       review_verdict: ["APPROVED", "REJECTED", "NEEDS_REVISION"],
+      round_status: ["DRAFT", "PUBLISHED", "ARCHIVED"],
     },
   },
 } as const
