@@ -648,6 +648,12 @@ export type Database = {
         | "SCOREKEEPER"
         | "VOLUNTEER"
         | "PARTICIPANT"
+        | "PRESIDENT"
+        | "VICE_PRESIDENT"
+        | "CREATIVE_HEAD"
+        | "PRE_CLINICAL_HEAD"
+        | "PARA_CLINICAL_HEAD"
+        | "CLINICAL_HEAD"
       difficulty_level: "EASY" | "MEDIUM" | "HARD"
       event_status:
         | "DRAFT"
@@ -807,6 +813,12 @@ export const Constants = {
         "SCOREKEEPER",
         "VOLUNTEER",
         "PARTICIPANT",
+        "PRESIDENT",
+        "VICE_PRESIDENT",
+        "CREATIVE_HEAD",
+        "PRE_CLINICAL_HEAD",
+        "PARA_CLINICAL_HEAD",
+        "CLINICAL_HEAD",
       ],
       difficulty_level: ["EASY", "MEDIUM", "HARD"],
       event_status: [
