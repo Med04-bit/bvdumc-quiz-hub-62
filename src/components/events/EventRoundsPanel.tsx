@@ -134,7 +134,7 @@ export function EventRoundsPanel({ eventId, canManage }: { eventId: string; canM
                       size="icon"
                       aria-label="Move up"
                       disabled={index === 0 || reorder.isPending}
-                      onClick={() => reorder.mutate({ a: round, b: rounds[index - 1] })}
+                      onClick={() => reorder.mutate({ a: round, b: rounds[index - 1]! })}
                     >
                       <ArrowUp className="size-4" />
                     </Button>
@@ -143,7 +143,7 @@ export function EventRoundsPanel({ eventId, canManage }: { eventId: string; canM
                       size="icon"
                       aria-label="Move down"
                       disabled={index === rounds.length - 1 || reorder.isPending}
-                      onClick={() => reorder.mutate({ a: round, b: rounds[index + 1] })}
+                      onClick={() => reorder.mutate({ a: round, b: rounds[index + 1]! })}
                     >
                       <ArrowDown className="size-4" />
                     </Button>
