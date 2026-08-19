@@ -17,7 +17,7 @@ import {
   EventStatusBadge,
   type EventStatus,
 } from "@/components/events/EventStatusBadge";
-import { registrationLabel } from "./events.index";
+import { registrationLabel } from "@/lib/events";
 
 export const Route = createFileRoute("/_authenticated/events/$eventId")({
   head: () => ({

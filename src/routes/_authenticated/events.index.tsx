@@ -11,6 +11,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EventFormDialog, type EventRecord } from "@/components/events/EventFormDialog";
 import { EventStatusBadge, type EventStatus } from "@/components/events/EventStatusBadge";
+import { registrationLabel } from "@/lib/events";
 
 export const Route = createFileRoute("/_authenticated/events/")({
   head: () => ({
@@ -66,16 +67,6 @@ function matches(event: EventRecord, filter: Filter): boolean {
     default:
       return true;
   }
-}
-
-export function registrationLabel(event: EventRecord): string {
-  const now = Date.now();
-  const opens = event.registration_opens_at ? new Date(event.registration_opens_at).getTime() : null;
-  const closes = event.registration_closes_at ? new Date(event.registration_closes_at).getTime() : null;
-  if (!opens && !closes) return "Registration window not set";
-  if (opens && now < opens) return `Registration opens ${new Date(opens).toLocaleString()}`;
-  if (closes && now > closes) return "Registration closed";
-  return closes ? `Registration closes ${new Date(closes).toLocaleString()}` : "Registration open";
 }
 
 function EventsPage() {
