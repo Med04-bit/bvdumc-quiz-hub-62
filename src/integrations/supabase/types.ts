@@ -355,6 +355,7 @@ export type Database = {
           question_id: string
           reviewer_id: string | null
           verdict: Database["public"]["Enums"]["review_verdict"]
+          version_number: number
         }
         Insert: {
           comments?: string | null
@@ -363,6 +364,7 @@ export type Database = {
           question_id: string
           reviewer_id?: string | null
           verdict: Database["public"]["Enums"]["review_verdict"]
+          version_number?: number
         }
         Update: {
           comments?: string | null
@@ -371,6 +373,7 @@ export type Database = {
           question_id?: string
           reviewer_id?: string | null
           verdict?: Database["public"]["Enums"]["review_verdict"]
+          version_number?: number
         }
         Relationships: [
           {
@@ -382,57 +385,189 @@ export type Database = {
           },
         ]
       }
+      question_usage: {
+        Row: {
+          created_at: string
+          event_id: string | null
+          id: string
+          question_id: string
+          recorded_by: string | null
+          round_id: string | null
+          used_at: string
+          version_number: number | null
+        }
+        Insert: {
+          created_at?: string
+          event_id?: string | null
+          id?: string
+          question_id: string
+          recorded_by?: string | null
+          round_id?: string | null
+          used_at?: string
+          version_number?: number | null
+        }
+        Update: {
+          created_at?: string
+          event_id?: string | null
+          id?: string
+          question_id?: string
+          recorded_by?: string | null
+          round_id?: string | null
+          used_at?: string
+          version_number?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "question_usage_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "question_usage_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "question_usage_round_id_fkey"
+            columns: ["round_id"]
+            isOneToOne: false
+            referencedRelation: "event_rounds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      question_versions: {
+        Row: {
+          change_note: string | null
+          changed_by: string | null
+          created_at: string
+          id: string
+          question_id: string
+          snapshot: Json
+          status: Database["public"]["Enums"]["question_status"]
+          version_number: number
+        }
+        Insert: {
+          change_note?: string | null
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          question_id: string
+          snapshot: Json
+          status: Database["public"]["Enums"]["question_status"]
+          version_number: number
+        }
+        Update: {
+          change_note?: string | null
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          question_id?: string
+          snapshot?: Json
+          status?: Database["public"]["Enums"]["question_status"]
+          version_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "question_versions_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       questions: {
         Row: {
           correct_answer: string | null
+          correct_answers: Json
           created_at: string
           created_by: string | null
           difficulty: Database["public"]["Enums"]["difficulty_level"]
           event_id: string | null
           explanation: string | null
           id: string
+          negative_marks: number
           options: Json
           points: number
           question_text: string
           question_type: Database["public"]["Enums"]["question_type"]
+          reviewed_at: string | null
+          reviewed_by: string | null
           round_id: string | null
+          source_reference: string | null
           status: Database["public"]["Enums"]["question_status"]
           subject: string | null
+          subject_id: string | null
+          submitted_at: string | null
+          subtopic_id: string | null
+          tags: string[]
+          topic_id: string | null
           updated_at: string
+          updated_by: string | null
+          version_number: number
         }
         Insert: {
           correct_answer?: string | null
+          correct_answers?: Json
           created_at?: string
           created_by?: string | null
           difficulty?: Database["public"]["Enums"]["difficulty_level"]
           event_id?: string | null
           explanation?: string | null
           id?: string
+          negative_marks?: number
           options?: Json
           points?: number
           question_text: string
           question_type?: Database["public"]["Enums"]["question_type"]
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           round_id?: string | null
+          source_reference?: string | null
           status?: Database["public"]["Enums"]["question_status"]
           subject?: string | null
+          subject_id?: string | null
+          submitted_at?: string | null
+          subtopic_id?: string | null
+          tags?: string[]
+          topic_id?: string | null
           updated_at?: string
+          updated_by?: string | null
+          version_number?: number
         }
         Update: {
           correct_answer?: string | null
+          correct_answers?: Json
           created_at?: string
           created_by?: string | null
           difficulty?: Database["public"]["Enums"]["difficulty_level"]
           event_id?: string | null
           explanation?: string | null
           id?: string
+          negative_marks?: number
           options?: Json
           points?: number
           question_text?: string
           question_type?: Database["public"]["Enums"]["question_type"]
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           round_id?: string | null
+          source_reference?: string | null
           status?: Database["public"]["Enums"]["question_status"]
           subject?: string | null
+          subject_id?: string | null
+          submitted_at?: string | null
+          subtopic_id?: string | null
+          tags?: string[]
+          topic_id?: string | null
           updated_at?: string
+          updated_by?: string | null
+          version_number?: number
         }
         Relationships: [
           {
@@ -447,6 +582,27 @@ export type Database = {
             columns: ["round_id"]
             isOneToOne: false
             referencedRelation: "event_rounds"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "questions_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "questions_subtopic_id_fkey"
+            columns: ["subtopic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "questions_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
             referencedColumns: ["id"]
           },
         ]
@@ -515,6 +671,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      subjects: {
+        Row: {
+          code: string | null
+          created_at: string
+          created_by: string | null
+          division: Database["public"]["Enums"]["academic_division"]
+          id: string
+          is_active: boolean
+          name: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string
+          created_by?: string | null
+          division?: Database["public"]["Enums"]["academic_division"]
+          id?: string
+          is_active?: boolean
+          name: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          code?: string | null
+          created_at?: string
+          created_by?: string | null
+          division?: Database["public"]["Enums"]["academic_division"]
+          id?: string
+          is_active?: boolean
+          name?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
       }
       team_members: {
         Row: {
@@ -590,6 +782,57 @@ export type Database = {
           },
         ]
       }
+      topics: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          name: string
+          parent_topic_id: string | null
+          sort_order: number
+          subject_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          parent_topic_id?: string | null
+          sort_order?: number
+          subject_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          parent_topic_id?: string | null
+          sort_order?: number
+          subject_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "topics_parent_topic_id_fkey"
+            columns: ["parent_topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "topics_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -660,6 +903,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_access_question_bank: { Args: { _user_id: string }; Returns: boolean }
+      can_author_questions: { Args: { _user_id: string }; Returns: boolean }
+      can_review_division: {
+        Args: {
+          _division: Database["public"]["Enums"]["academic_division"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      can_review_question: {
+        Args: { _question_id: string; _user_id: string }
+        Returns: boolean
+      }
       has_any_role: {
         Args: {
           _roles: Database["public"]["Enums"]["app_role"][]
@@ -676,8 +932,10 @@ export type Database = {
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
       is_organiser: { Args: { _user_id: string }; Returns: boolean }
+      is_senior_leadership: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
+      academic_division: "PRE_CLINICAL" | "PARA_CLINICAL" | "CLINICAL" | "OTHER"
       app_role:
         | "SUPER_ADMIN"
         | "ADMIN"
@@ -854,6 +1112,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      academic_division: ["PRE_CLINICAL", "PARA_CLINICAL", "CLINICAL", "OTHER"],
       app_role: [
         "SUPER_ADMIN",
         "ADMIN",
