@@ -694,6 +694,7 @@ export type Database = {
         | "PRE_CLINICAL_HEAD"
         | "PARA_CLINICAL_HEAD"
         | "CLINICAL_HEAD"
+        | "FOUNDER"
       difficulty_level: "EASY" | "MEDIUM" | "HARD"
       event_mode: "ONLINE" | "OFFLINE"
       event_status:
@@ -709,15 +710,22 @@ export type Database = {
         | "UNDER_REVIEW"
         | "APPROVED"
         | "REJECTED"
+        | "CHANGES_REQUESTED"
+        | "ARCHIVED"
       question_type:
         | "MCQ"
         | "TRUE_FALSE"
         | "SHORT_ANSWER"
         | "IMAGE_BASED"
         | "BUZZER"
+        | "MULTI_MCQ"
       registration_status: "PENDING" | "CONFIRMED" | "WAITLISTED" | "CANCELLED"
       result_visibility: "IMMEDIATE" | "AFTER_EVENT"
-      review_verdict: "APPROVED" | "REJECTED" | "NEEDS_REVISION"
+      review_verdict:
+        | "APPROVED"
+        | "REJECTED"
+        | "NEEDS_REVISION"
+        | "CHANGES_REQUESTED"
       round_status: "DRAFT" | "PUBLISHED" | "ARCHIVED"
     }
     CompositeTypes: {
@@ -862,6 +870,7 @@ export const Constants = {
         "PRE_CLINICAL_HEAD",
         "PARA_CLINICAL_HEAD",
         "CLINICAL_HEAD",
+        "FOUNDER",
       ],
       difficulty_level: ["EASY", "MEDIUM", "HARD"],
       event_mode: ["ONLINE", "OFFLINE"],
@@ -879,6 +888,8 @@ export const Constants = {
         "UNDER_REVIEW",
         "APPROVED",
         "REJECTED",
+        "CHANGES_REQUESTED",
+        "ARCHIVED",
       ],
       question_type: [
         "MCQ",
@@ -886,10 +897,16 @@ export const Constants = {
         "SHORT_ANSWER",
         "IMAGE_BASED",
         "BUZZER",
+        "MULTI_MCQ",
       ],
       registration_status: ["PENDING", "CONFIRMED", "WAITLISTED", "CANCELLED"],
       result_visibility: ["IMMEDIATE", "AFTER_EVENT"],
-      review_verdict: ["APPROVED", "REJECTED", "NEEDS_REVISION"],
+      review_verdict: [
+        "APPROVED",
+        "REJECTED",
+        "NEEDS_REVISION",
+        "CHANGES_REQUESTED",
+      ],
       round_status: ["DRAFT", "PUBLISHED", "ARCHIVED"],
     },
   },
