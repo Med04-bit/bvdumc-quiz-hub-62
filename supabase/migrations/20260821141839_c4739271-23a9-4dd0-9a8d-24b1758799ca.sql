@@ -1,0 +1,10 @@
+REVOKE ALL ON FUNCTION public.is_senior_leadership(uuid) FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.can_access_question_bank(uuid) FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.can_author_questions(uuid) FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.can_review_division(uuid, public.academic_division) FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.can_review_question(uuid, uuid) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.is_senior_leadership(uuid) TO service_role;
+GRANT EXECUTE ON FUNCTION public.can_access_question_bank(uuid) TO service_role;
+GRANT EXECUTE ON FUNCTION public.can_author_questions(uuid) TO service_role;
+GRANT EXECUTE ON FUNCTION public.can_review_division(uuid, public.academic_division) TO service_role;
+GRANT EXECUTE ON FUNCTION public.can_review_question(uuid, uuid) TO service_role;
