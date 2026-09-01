@@ -27,6 +27,7 @@ import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedTeamsRouteImport } from './routes/_authenticated/teams'
 import { Route as AuthenticatedEventsIndexRouteImport } from './routes/_authenticated/events.index'
 import { Route as AuthenticatedEventsEventIdRouteImport } from './routes/_authenticated/events.$eventId'
+import { Route as AuthenticatedQuestionBankIndexRouteImport } from './routes/_authenticated/question-bank.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -124,6 +125,12 @@ const AuthenticatedEventsEventIdRoute =
     path: '/events/$eventId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedQuestionBankIndexRoute =
+  AuthenticatedQuestionBankIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedQuestionBankRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -137,12 +144,13 @@ export interface FileRoutesByFullPath {
   '/logistics': typeof AuthenticatedLogisticsRoute
   '/online-quiz': typeof AuthenticatedOnlineQuizRoute
   '/participants': typeof AuthenticatedParticipantsRoute
-  '/question-bank': typeof AuthenticatedQuestionBankRoute
+  '/question-bank': typeof AuthenticatedQuestionBankRouteWithChildren
   '/scorekeeper': typeof AuthenticatedScorekeeperRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/teams': typeof AuthenticatedTeamsRoute
   '/events/$eventId': typeof AuthenticatedEventsEventIdRoute
   '/events/': typeof AuthenticatedEventsIndexRoute
+  '/question-bank/': typeof AuthenticatedQuestionBankIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -156,12 +164,12 @@ export interface FileRoutesByTo {
   '/logistics': typeof AuthenticatedLogisticsRoute
   '/online-quiz': typeof AuthenticatedOnlineQuizRoute
   '/participants': typeof AuthenticatedParticipantsRoute
-  '/question-bank': typeof AuthenticatedQuestionBankRoute
   '/scorekeeper': typeof AuthenticatedScorekeeperRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/teams': typeof AuthenticatedTeamsRoute
   '/events/$eventId': typeof AuthenticatedEventsEventIdRoute
   '/events': typeof AuthenticatedEventsIndexRoute
+  '/question-bank': typeof AuthenticatedQuestionBankIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -177,12 +185,13 @@ export interface FileRoutesById {
   '/_authenticated/logistics': typeof AuthenticatedLogisticsRoute
   '/_authenticated/online-quiz': typeof AuthenticatedOnlineQuizRoute
   '/_authenticated/participants': typeof AuthenticatedParticipantsRoute
-  '/_authenticated/question-bank': typeof AuthenticatedQuestionBankRoute
+  '/_authenticated/question-bank': typeof AuthenticatedQuestionBankRouteWithChildren
   '/_authenticated/scorekeeper': typeof AuthenticatedScorekeeperRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/teams': typeof AuthenticatedTeamsRoute
   '/_authenticated/events/$eventId': typeof AuthenticatedEventsEventIdRoute
   '/_authenticated/events/': typeof AuthenticatedEventsIndexRoute
+  '/_authenticated/question-bank/': typeof AuthenticatedQuestionBankIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -204,6 +213,7 @@ export interface FileRouteTypes {
     | '/teams'
     | '/events/$eventId'
     | '/events/'
+    | '/question-bank/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -217,12 +227,12 @@ export interface FileRouteTypes {
     | '/logistics'
     | '/online-quiz'
     | '/participants'
-    | '/question-bank'
     | '/scorekeeper'
     | '/settings'
     | '/teams'
     | '/events/$eventId'
     | '/events'
+    | '/question-bank'
   id:
     | '__root__'
     | '/'
@@ -243,6 +253,7 @@ export interface FileRouteTypes {
     | '/_authenticated/teams'
     | '/_authenticated/events/$eventId'
     | '/_authenticated/events/'
+    | '/_authenticated/question-bank/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -380,8 +391,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEventsEventIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/question-bank/': {
+      id: '/_authenticated/question-bank/'
+      path: '/'
+      fullPath: '/question-bank/'
+      preLoaderRoute: typeof AuthenticatedQuestionBankIndexRouteImport
+      parentRoute: typeof AuthenticatedQuestionBankRoute
+    }
   }
 }
+
+interface AuthenticatedQuestionBankRouteChildren {
+  AuthenticatedQuestionBankIndexRoute: typeof AuthenticatedQuestionBankIndexRoute
+}
+
+const AuthenticatedQuestionBankRouteChildren: AuthenticatedQuestionBankRouteChildren =
+  {
+    AuthenticatedQuestionBankIndexRoute: AuthenticatedQuestionBankIndexRoute,
+  }
+
+const AuthenticatedQuestionBankRouteWithChildren =
+  AuthenticatedQuestionBankRoute._addFileChildren(
+    AuthenticatedQuestionBankRouteChildren,
+  )
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAnalyticsRoute: typeof AuthenticatedAnalyticsRoute
@@ -392,7 +424,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedLogisticsRoute: typeof AuthenticatedLogisticsRoute
   AuthenticatedOnlineQuizRoute: typeof AuthenticatedOnlineQuizRoute
   AuthenticatedParticipantsRoute: typeof AuthenticatedParticipantsRoute
-  AuthenticatedQuestionBankRoute: typeof AuthenticatedQuestionBankRoute
+  AuthenticatedQuestionBankRoute: typeof AuthenticatedQuestionBankRouteWithChildren
   AuthenticatedScorekeeperRoute: typeof AuthenticatedScorekeeperRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedTeamsRoute: typeof AuthenticatedTeamsRoute
@@ -409,7 +441,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedLogisticsRoute: AuthenticatedLogisticsRoute,
   AuthenticatedOnlineQuizRoute: AuthenticatedOnlineQuizRoute,
   AuthenticatedParticipantsRoute: AuthenticatedParticipantsRoute,
-  AuthenticatedQuestionBankRoute: AuthenticatedQuestionBankRoute,
+  AuthenticatedQuestionBankRoute: AuthenticatedQuestionBankRouteWithChildren,
   AuthenticatedScorekeeperRoute: AuthenticatedScorekeeperRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedTeamsRoute: AuthenticatedTeamsRoute,
